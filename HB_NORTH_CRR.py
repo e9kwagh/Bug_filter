@@ -1,12 +1,12 @@
 """HB-north"""
-
 import csv
 import os
 from datetime import datetime
 
 
 def extractor():
-    filename = os.path.abspath("HB_NORTH_CRR .csv")
+    """extractor"""
+    filename = os.path.abspath("HB_NORTH_CRR.csv")
     with open(filename, "r", encoding="utf-8-sig") as hour:
         unsorted = list(csv.DictReader(hour))
         file_sorted = sorted(unsorted, key=lambda x: x["fordate"])
@@ -14,9 +14,11 @@ def extractor():
 
 
 def bug_filter():
+    """Bugfilter"""
     file = extractor()
-    all_dates = sorted(list(set([row["fordate"] for row in file])))
-    peakwd, peakwe, off_peak = [], [], []
+    all_dates = sorted({row["fordate"] for row in file})
+
+    off_peak = [] 
     result_list = []
     collections = []
 
